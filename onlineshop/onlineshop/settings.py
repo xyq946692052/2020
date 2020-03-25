@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "goods",
     "trade",
     "user_operation",
+    "crispy_forms", # xadmin需要用到
+    "xadmin",
 ]
 
 MIDDLEWARE = [
@@ -88,7 +90,7 @@ DATABASES = {
         'NAME': 'onlineshop',
         'USER': 'root',
         'PASSWORD': 'xyq',
-        'HOST': '192.168.159.128',
+        'HOST': "127.0.0.1",#'192.168.159.128',
         'option': {'init_command': 'SET storage_engine=INNODB'} # 不设置为INNODB，migration会出错
     }
 }
@@ -116,16 +118,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh_hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
-
+USE_TZ = False  # 默认是True,时间是utc时间，由于我们要用本地时间，所以手动修改为False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

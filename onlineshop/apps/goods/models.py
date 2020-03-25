@@ -17,7 +17,7 @@ class GoodsCategory(models.Model):
     desc = models.TextField(default="", verbose_name="类别描述", help_text="类别描述")
     category_type = models.IntegerField(choices=CATEGORY_TYPE, verbose_name="类目级别", help_text="类目级别")
     parent_category = models.ForeignKey("self", null=True, blank=True,
-                                        verbose_name="父类目级", related_name="sub_cat")  # 建立目录树，一个表包含多个类别
+                                        verbose_name="父类目级", related_name="sub_cat", on_delete=models.CASCADE)  # 建立目录树，一个表包含多个类别
     is_tab = models.BooleanField(default=False, verbose_name="是否导航", help_text="是否导航")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
@@ -32,6 +32,7 @@ class GoodsCategoryBrand(models.Model):
     """
     品牌名
     """
+    category = models.ForeignKey(GoodsCategory, null=True, blank=True, on_delete=models.CASCADE, verbose_name="商品类目", help_text="商品类目")
     name = models.CharField(default="", max_length=30, verbose_name="品牌名", help_text="品牌名")
     desc = models.TextField(default="", max_length=200, verbose_name="品牌描述", help_text="品牌描述")
     image = models.ImageField(max_length=200, upload_to="brand/images/")
@@ -49,7 +50,7 @@ class Goods(models.Model):
     """
     商品
     """
-    category = models.ForeignKey(GoodsCategory, null=True, blank=True, verbose_name="商品类目")
+    category = models.ForeignKey(GoodsCategory, null=True, blank=True, verbose_name="商品类目", on_delete=models.CASCADE)
     goods_sn = models.CharField(max_length=50, default="", verbose_name="商品唯一货号")
     name = models.CharField(max_length=300, verbose_name="商品名")
     click_num = models.IntegerField(default=0, verbose_name="点击数")
@@ -69,23 +70,39 @@ class Goods(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间", help_text="添加时间")
 
     class Meta:
-        verbose_name = verbose_name_plural = "商品轮"
+        verbose_name = verbose_name_plural = "商品"
 
     def __str__(self):
         return self.name
-
 
 
 class GoodsImage(models.Model):
     """
     商品轮播图
     """
-    goods = models.ForeignKey(Goods)
-    image = models.ImageField(upload_to="")
+    goods = models.ForeignKey(Goods, verbose_name="商品", related_name="images", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="", verbose_name="图片", null=True, blank=True)
+    image_url = models.CharField(max_length=300, null=True, blank=True, verbose_name="图片链接")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间", help_text="添加时间")
 
     class Meta:
-        verbose_name = verbose_name_plural = "商品轮播图"
+        verbose_name = verbose_name_plural = "商品图图片"
+
+    def __str__(self):
+        return self.goods.name
+
+
+class Banner(models.Model):
+    """
+    轮播的商品
+    """
+    goods = models.ForeignKey(Goods, verbose_name="商品",on_delete=models.CASCADE)
+    images = models.ImageField(upload_to="banner", verbose_name="轮播图片")
+    index = models.IntegerField(default=0, verbose_name="轮播顺序")
+    add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
+
+    class Meta:
+        verbose_name = verbose_name_plural = "轮播商品"
 
     def __str__(self):
         return self.goods.name
