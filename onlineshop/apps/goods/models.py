@@ -35,7 +35,7 @@ class GoodsCategoryBrand(models.Model):
     category = models.ForeignKey(GoodsCategory, null=True, blank=True, on_delete=models.CASCADE, verbose_name="商品类目", help_text="商品类目")
     name = models.CharField(default="", max_length=30, verbose_name="品牌名", help_text="品牌名")
     desc = models.TextField(default="", max_length=200, verbose_name="品牌描述", help_text="品牌描述")
-    image = models.ImageField(max_length=200, upload_to="brand/images/")
+    image = models.ImageField(max_length=200, upload_to="brands/")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
     class Meta:
@@ -63,8 +63,7 @@ class Goods(models.Model):
     goods_desc = UEditorField(verbose_name="内容", imagePath="goods/images/", width=1000, height=500,
                               filePath="goods/files/", default="")
     ship_free = models.BooleanField(default=False, verbose_name="是否承担运费")
-    goods_front_image = models.ImageField(upload_to="", null=True, blank=True)
-    goods_front_image_url = models.CharField(max_length=300, default="", verbose_name="封面图链接")
+    goods_front_image = models.ImageField(upload_to="goods/images/", null=True, blank=True)
     is_new = models.BooleanField(default=False, verbose_name="是否新品")
     is_hot = models.BooleanField(default=False, verbose_name="是否热销")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间", help_text="添加时间")
@@ -97,7 +96,7 @@ class Banner(models.Model):
     轮播的商品
     """
     goods = models.ForeignKey(Goods, verbose_name="商品",on_delete=models.CASCADE)
-    images = models.ImageField(upload_to="banner", verbose_name="轮播图片")
+    image = models.ImageField(upload_to="banner", verbose_name="轮播图片")
     index = models.IntegerField(default=0, verbose_name="轮播顺序")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 

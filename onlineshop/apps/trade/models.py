@@ -20,7 +20,7 @@ class ShoppingCart(models.Model):
         verbose_name = verbose_name_plural = "购物车"
 
     def __str__(self):
-        return "%s(%d)".format(self.goods.name, self.goods_num)
+        return "{}({})".format(self.goods.name, self.goods_num)
 
 
 class OrderInfo(models.Model):
@@ -34,7 +34,7 @@ class OrderInfo(models.Model):
     )
 
     user = models.ForeignKey(User, verbose_name="用户", on_delete=models.CASCADE)
-    order_sn = models.CharField(max_length=30, unique=True, verbose_name="订单号")
+    order_sn = models.CharField(max_length=30, unique=True, null=True, blank=True, verbose_name="订单号")
     nonce_str = models.CharField(max_length=50, null=True, blank=True, verbose_name="")
     trade_no = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name="")
     pay_status = models.CharField(max_length=10, choices=ORDER_STATUS, verbose_name="订单状态")

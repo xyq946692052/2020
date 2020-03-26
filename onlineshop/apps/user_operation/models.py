@@ -16,7 +16,7 @@ class UserFav(models.Model):
     goods = models.ForeignKey(Goods, verbose_name="商品", on_delete=models.CASCADE)
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
-    class Meat:
+    class Meta:
         verbose_name = verbose_name_plural = "用户收藏"
 
     def __str__(self):
@@ -60,7 +60,7 @@ class UserAddress(models.Model):
     signer_mobile = models.CharField(max_length=11, default="", verbose_name="电话")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="收货地址")
 
-    class Meat:
+    class Meta:
         verbose_name = verbose_name_plural = "收货地址"
 
     def __str__(self):

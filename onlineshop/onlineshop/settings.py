@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "DjangoUeditor",
-    "users",
-    "goods",
-    "trade",
-    "user_operation",
+    "users.apps.UsersConfig",
+    "goods.apps.GoodsConfig",
+    "trade.apps.TradeConfig",
+    "user_operation.apps.UserOperationConfig",
     "crispy_forms", # xadmin需要用到
     "xadmin",
 ]
@@ -90,7 +90,7 @@ DATABASES = {
         'NAME': 'onlineshop',
         'USER': 'root',
         'PASSWORD': 'xyq',
-        'HOST': "127.0.0.1",#'192.168.159.128',
+        'HOST': '192.168.159.129',
         'option': {'init_command': 'SET storage_engine=INNODB'} # 不设置为INNODB，migration会出错
     }
 }
@@ -132,3 +132,6 @@ USE_TZ = False  # 默认是True,时间是utc时间，由于我们要用本地时
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
