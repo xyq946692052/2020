@@ -15,15 +15,24 @@ Including another URLconf
 """
 #from django.contrib import admin
 from django.views.static import serve
-from django.urls import path, re_path
+from django.urls import path, re_path, include
+from rest_framework.documentation import include_docs_urls
+from rest_framework.routers import DefaultRouter
+
 import xadmin
 from onlineshop.settings import MEDIA_ROOT
+from goods.views import GoodsListViewset
+
+router = DefaultRouter()
+router.register('goods', GoodsListViewset)
+
 
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
     re_path(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    path('docs/', include_docs_urls(title='onlineshop')),
+    path('api-auth/', include('rest_framework.urls'), name='rest_framework'),
 
-    # 商品列表页
-    path('goods/',)
+    path('', include(router.urls)),
 ]

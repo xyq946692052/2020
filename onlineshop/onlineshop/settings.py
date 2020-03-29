@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     "user_operation.apps.UserOperationConfig",
     "crispy_forms", # xadmin需要用到
     "xadmin",
+
+    'guardian',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -90,7 +93,7 @@ DATABASES = {
         'NAME': 'onlineshop',
         'USER': 'root',
         'PASSWORD': 'xyq',
-        'HOST': '192.168.159.129',
+        'HOST': '192.168.159.130',
         'option': {'init_command': 'SET storage_engine=INNODB'} # 不设置为INNODB，migration会出错
     }
 }
@@ -135,3 +138,9 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+#     'PAGE_SIZE': 10,
+# }
